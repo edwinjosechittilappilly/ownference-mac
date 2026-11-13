@@ -1,4 +1,18 @@
-# Observed native acceptance — 0.2.0
+# Observed native acceptance
+
+## OwnMode Mac 0.3.0 identity cutover
+
+- Core preset/input tests passed. The renamed arm64 app, ZIP and DMG built; ad-hoc codesigning verification and DMG checksum verification passed.
+- The renamed executable's UI smoke passed against the available Apple on-device model: native controls, all five presets, cancellation/recovery and retained-window reopen.
+- The actual content-view screenshot shows OwnMode Mac, its shared split-O icon, model readiness, separate source/result areas and real generated text.
+- The menu icon uses a transparent template mask for system appearance. Login remains opt-in; acceptance did not enable it. The app reported that registration was unavailable from the build location and instructed moving it to Applications.
+- macOS26 and eligible/ready Apple Intelligence remain requirements. No Developer ID signature, notarization, App Store approval or availability on every Mac is claimed.
+
+GitHub CI and release download/install checks are separate from these source-build observations.
+
+## Historical acceptance — Ownference Mac 0.2.0
+
+Historical evidence for Ownference Mac 0.2.0, before the OwnMode rebrand; it does not verify the renamed app or its release artifacts.
 
 On an arm64 Mac with Swift6.2.3/macOS26.2 SDK and an available Apple on-device model:
 

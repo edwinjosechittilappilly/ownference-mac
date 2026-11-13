@@ -1,87 +1,92 @@
-<p align="center"><img src="docs/assets/logo.svg" width="88" alt="Ownference linked-loop logo with Mac-window badge"></p>
+![OwnMode Mac](docs/assets/hero.svg)
 
-# Ownference Mac
-### A little studio for local intelligence.
+# OwnMode Mac
 
-A native Mac workspace for **rewriting, summarizing, extracting, comparing and drafting** with Apple's on-device model. No Node, Ollama server or cloud API key required.
+**Switch to your own AI.**
 
-<p><a href="https://github.com/edwinjosechittilappilly/ownference-mac/releases">Download the Mac app</a> · <a href="#start-with-a-release">Install</a> · <a href="#five-workflows-worth-keeping-close">Workflows</a> · <a href="#menu-bar-and-launch-at-login">Menu bar & startup</a> · <a href="docs/testing.md">Verification</a></p>
+Local intelligence for your apps and browser. OwnMode Mac is a native Swift app for summarizing, rewriting, extracting, comparing and drafting with **Apple's on-device Foundation Model**. No Node, Ollama server or API key.
 
-![Ownference Mac: a little studio for local intelligence](docs/assets/hero.svg)
+[**Download for Apple silicon (.dmg)**](https://github.com/edwinjosechittilappilly/ownmode-mac/releases/download/v0.3.0/OwnMode-Mac-0.3.0-arm64.dmg) · [ZIP](https://github.com/edwinjosechittilappilly/ownmode-mac/releases/download/v0.3.0/OwnMode-Mac-0.3.0-arm64.zip) · [Build from source](#build-from-source)
 
-**Apache-2.0 · Native Swift + AppKit · Apple on-device · Private preview**
+The app is ad-hoc signed, not Developer ID signed or notarized; macOS may block first launch. Follow your approved software policy or build from source; do not disable Gatekeeper.
 
-## Start with a release
+[![CI](https://github.com/edwinjosechittilappilly/ownmode-mac/actions/workflows/ci.yml/badge.svg)](https://github.com/edwinjosechittilappilly/ownmode-mac/actions/workflows/ci.yml)
+[Apache-2.0](LICENSE) · Swift + AppKit · [Issues](https://github.com/edwinjosechittilappilly/ownmode-mac/issues/new/choose)
 
-**Requires:** an Apple Silicon Mac running macOS 26+, Apple Intelligence enabled, and the on-device model downloaded and available. This is **not an app every Mac can run**. Availability also depends on Apple's supported configuration, region and language.
+## Install
 
-With GitHub CLI and access to this private repository:
+**Requires macOS 26+, an eligible Apple silicon Mac and enabled/ready Apple Intelligence.** Availability also depends on Apple's supported region/language/configuration. Not every Mac can run this model.
 
-```sh
-gh release download v0.2.0 \
-  --repo edwinjosechittilappilly/ownference-mac \
-  --pattern Ownference-Mac-0.2.0-arm64.zip
+1. Download and open the DMG.
+2. Drag **OwnMode Mac** to Applications.
+3. Open the app, choose a preset and paste your text.
 
-mkdir -p "$HOME/Applications"
-ditto -x -k Ownference-Mac-0.2.0-arm64.zip "$HOME/Applications"
-open "$HOME/Applications/Ownference Mac.app"
-```
+Alternatively, extract the ZIP and move the app to Applications.
 
-Prefer a graphical download? Open **Releases**, download the arm64 app ZIP, extract it and move **Ownference Mac.app** to Applications. Keep it in a stable location before enabling launch at login.
+**Upgrading from Ownference Mac:** disable launch at login in the old app, or remove its login item in System Settings, before removing the old app. OwnMode Mac has a new bundle identifier and does not inherit the old login registration. After installing it in Applications, opt in to launch at login again if desired and approve it in System Settings if prompted.
 
-Release builds are **ad-hoc signed, not Developer ID signed or notarized**. macOS may block first launch; use only your organization's approved process or build from source. Do not disable Gatekeeper. The ZIP includes no Node runtime or downloaded third-party model.
+![The OwnMode Mac workspace using Apple's on-device model](docs/assets/screenshot.png)
 
-## Five workflows worth keeping close
+*Your source, your direction and your result—separate and visible. This is the real AppKit interface.*
 
-| Preset | Try it with |
+## Five reasons to keep it close
+
+| Choose | Give it | Get back |
+|---|---|---|
+| Summarize | Notes or an article excerpt | A shorter version you can review |
+| Rewrite | A rough paragraph and a tone | A clearer draft |
+| Extract | Notes with dates and decisions | The details worth keeping |
+| Compare | Two alternatives | Differences to consider |
+| Draft | Context and a goal | A starting point—not an automatically sent message |
+
+Results stream as they are generated. Cancel, copy, save or clear the workspace. The app never sends email, buys anything or executes model-generated actions.
+
+## There when you need it
+
+- **Menu-bar access:** reopen the workspace or choose a preset without hunting for a window.
+- **Opt-in launch at login:** enable it in the app; status and required System Settings approval are visible.
+- **Model readiness:** unavailable, refused, cancelled and oversized-input errors are reported, not replaced with fake output.
+- **Native controls:** a focused AppKit workspace, not a browser wrapper or bundled Node server.
+
+Keep the app in Applications before configuring login startup. Closing its window does not quit it; use the app/menu-bar Quit action when finished.
+
+## Local means the model runs here
+
+The app invokes `SystemLanguageModel` on-device—not Private Cloud Compute. There is no cloud fallback, telemetry or prompt-history database.
+
+Copying/saving output makes it available wherever you put it. Apple's context limits, languages, safety guardrails and acceptable-use requirements apply. Shorten input when the model's context is exceeded; review answers for errors and prompt injection.
+
+## Which OwnMode product should I use?
+
+| You want | Get |
 |---|---|
-| Summarize | A long article excerpt or meeting notes |
-| Rewrite | A rough paragraph that needs a clearer tone |
-| Extract | Notes containing dates, decisions and action items |
-| Compare | Two options you want to understand side by side |
-| Draft | Context for a reply you will review yourself |
+| A native writing app using Apple's model | **This app** |
+| Ollama/LM Studio or a local endpoint for other apps | [OwnMode Connect](https://github.com/edwinjosechittilappilly/ownmode) |
+| Help beside text in existing browser tabs | [OwnMode Browser](https://github.com/edwinjosechittilappilly/ownmode-browser) |
+| Local inference inside your own web frontend | [OwnMode Web](https://github.com/edwinjosechittilappilly/ownmode-web) |
 
-Choose a preset, paste source text, optionally add direction and generate. Watch the result stream, cancel if needed, then copy or save it. The app never sends email, edits a website or executes an action on the model's behalf.
+This app uses Apple's model only. It is not an Ollama-compatible HTTP server and does not need the bridge.
 
-The source and result stay visibly separate. Clear the workspace when finished. Source length is bounded, but the model's context window can be smaller; shorten the input when prompted. A valid response may still be wrong—review it before use.
+## Build from source
 
-## Menu bar and launch at login
-
-The shared Ownference icon keeps the workspace reachable from the menu bar. Open the workspace, choose a preset or quit from its menu. Closing a window is different from quitting the app.
-
-Launch at login is **opt-in** through the app's control. Registration uses Apple's `SMAppService`; the app reports enabled, disabled or approval-required status and can open the relevant System Settings panel. Installation does not silently enable startup. A stable app location and macOS approval may be required.
-
-## Native app or local bridge?
-
-| Choose | When you want |
-|---|---|
-| **Ownference Mac** | A Node-free, native preset workspace using Apple's model |
-| [Ownference Bridge](https://github.com/edwinjosechittilappilly/ownference) | A local endpoint for apps, multiple providers and browser native messaging |
-| [Ownference Tabs](https://github.com/edwinjosechittilappilly/ownference-tabs) | Approved page-text assistance and website relay approvals |
-| [Ownference Web](https://github.com/edwinjosechittilappilly/ownference-web) | A JavaScript SDK for cooperating frontends |
-
-The Mac app is not an Ollama-compatible HTTP server and does not replace the bridge. It currently uses Apple on-device inference only; it does not claim selectable Ollama/LM Studio providers. Keeping these products separate avoids requiring Node for a simple Mac writing task.
-
-## Local, with honest limits
-
-No cloud fallback, telemetry or prompt-history database. The app invokes `SystemLanguageModel` locally—not Private Cloud Compute. Copying or saving output makes it available wherever you put it; local inference is not a guarantee that other applications will keep it private.
-
-Apple's model availability, context limits, safety guardrails and acceptable-use requirements apply. Prompt injection and hallucinations remain possible. The UI reports unavailable, refused, cancelled and too-large-input conditions instead of inventing a result.
-
-## Build and verify
-
-Requires a compatible Xcode command-line toolchain with the macOS 26 SDK:
+Requires a compatible Xcode command-line toolchain with the macOS26 SDK:
 
 ```sh
 bash scripts/test.sh
 bash scripts/build.sh
-"build/Ownference Mac.app/Contents/MacOS/OwnferenceMac" --smoke
-"build/Ownference Mac.app/Contents/MacOS/OwnferenceMac" \
+"build/OwnMode Mac.app/Contents/MacOS/OwnModeMac" --smoke
+"build/OwnMode Mac.app/Contents/MacOS/OwnModeMac" \
   --ui-smoke "$PWD/build/ui-smoke.png"
 ```
 
-The UI smoke launches an actual native window, drives its controls, waits for real on-device generation and captures the rendered view. It requires a supported Mac with the model ready; CI compilation and semantic tests alone do not prove model availability.
+The UI smoke launches the real window and drives actual controls with on-device generation; it requires a ready model. CI compilation/core tests alone cannot prove model availability.
 
-See [testing](docs/testing.md), [architecture](docs/architecture.md), [security](SECURITY.md) and [contributing](CONTRIBUTING.md). Releases include checksums; the GitHub Actions tab is the source of truth for CI status.
+## Make it better
 
-Licensed under [Apache-2.0](LICENSE). Ownference is a working brand, not trademark-cleared. Private preview until the owner approves public distribution.
+[Suggest a useful workflow or report a problem](https://github.com/edwinjosechittilappilly/ownmode-mac/issues/new/choose). Keep personal text out of reports. Screenshots and reproducible steps help; tokens and private documents do not.
+
+[Architecture](docs/architecture.md) · [Testing](docs/testing.md) · [Observed verification](docs/verification.md) · [Brand assets](docs/assets/README.md) · [Contributing](CONTRIBUTING.md) · [Security](SECURITY.md)
+
+**Switch to your own AI.** [Connect](https://github.com/edwinjosechittilappilly/ownmode) · [Web](https://github.com/edwinjosechittilappilly/ownmode-web) · [Browser](https://github.com/edwinjosechittilappilly/ownmode-browser) · [Mac](https://github.com/edwinjosechittilappilly/ownmode-mac)
+
+Apache-2.0. Releases include SHA256SUMS; no App Store approval, notarization or trademark clearance is claimed.

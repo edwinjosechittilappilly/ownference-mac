@@ -1,4 +1,4 @@
-# Ownference Mac development
+# OwnMode Mac development
 
 ## Map
 `Sources/Core.swift` owns preset semantics and input bounds. `Sources/App.swift` owns the actual AppKit window, model session, menu bar and opt-in login lifecycle. `Tests/CoreTests.swift` exercises the pure core. `scripts/` builds/tests the app and arm64 release ZIP.

@@ -19,10 +19,11 @@ jobs:
       - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7
         with:
           persist-credentials: false
-      - run: test "$RELEASE_TAG" = v0.2.0
       - run: bash scripts/test.sh
       - run: bash scripts/build.sh
-      - run: codesign --verify --deep --strict 'build/Ownference Mac.app'
-      - run: mkdir -p dist && cp build/Ownference-Mac-0.2.0-arm64.zip dist/
-      - run: (cd dist && shasum -a 256 ./*.zip > SHA256SUMS)
-      - run: gh release create "$RELEASE_TAG" dist/* --verify-tag --title "Ownference Mac $RELEASE_TAG" --generate-notes
+      - run: test "$RELEASE_TAG" = "v$(/usr/libexec/PlistBuddy -c 'Print CFBundleShortVersionString' 'build/OwnMode Mac.app/Contents/Info.plist')"
+      - run: hdiutil verify build/OwnMode-Mac-0.3.0-arm64.dmg
+      - run: codesign --verify --deep --strict 'build/OwnMode Mac.app'
+      - run: mkdir -p dist && cp build/OwnMode-Mac-0.3.0-arm64.{zip,dmg} dist/
+      - run: (cd dist && shasum -a 256 ./*.zip ./*.dmg > SHA256SUMS)
+      - run: gh release create "$RELEASE_TAG" dist/* --verify-tag --title "OwnMode Mac $RELEASE_TAG" --notes-file RELEASE-NOTES.md

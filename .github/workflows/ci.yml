@@ -20,7 +20,8 @@ jobs:
           persist-credentials: false
       - run: bash scripts/test.sh
       - run: bash scripts/build.sh
-      - run: codesign --verify --deep --strict 'build/Ownference Mac.app'
+      - run: hdiutil verify build/OwnMode-Mac-0.3.0-arm64.dmg
+      - run: codesign --verify --deep --strict 'build/OwnMode Mac.app'
   ci-success:
     if: always()
     needs: [verify]
