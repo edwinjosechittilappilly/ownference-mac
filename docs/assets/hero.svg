@@ -1,0 +1,12 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 420" role="img" aria-labelledby="title desc">
+  <title id="title">Ownference Mac — A little studio for local intelligence.</title><desc id="desc">A native Mac workspace for Apple on-device writing, summarizing and extracting, with a menu bar shortcut.</desc>
+  <rect width="1200" height="420" rx="30" fill="#103b32"/><path d="M760 0v420M0 340h1200" stroke="#235245"/>
+  <text x="64" y="72" font-family="Arial,sans-serif" font-size="15" letter-spacing="4" fill="#9dd9b9">OWNFERENCE / MAC</text>
+  <text x="60" y="157" font-family="Arial,sans-serif" font-size="60" font-weight="700" letter-spacing="-2" fill="#f5f7ef">A little studio.</text>
+  <text x="60" y="230" font-family="Georgia,serif" font-size="58" font-style="italic" fill="#c8f0da">Local intelligence.</text>
+  <text x="64" y="285" font-family="Arial,sans-serif" font-size="21" fill="#c5dacf">Rewrite. Summarize. Make the text yours.</text>
+  <text x="64" y="385" font-family="Arial,sans-serif" font-size="16" fill="#c8f0da">NATIVE SWIFT  /  APPLE ON-DEVICE  /  MENU BAR ACCESS</text>
+  <g fill="none" stroke="#c8f0da" stroke-width="13"><ellipse cx="928" cy="167" rx="55" ry="70"/><ellipse cx="984" cy="167" rx="55" ry="70"/></g>
+  <path d="M956 133c6 19 15 28 34 34-19 6-28 15-34 34-6-19-15-28-34-34 19-6 28-15 34-34Z" fill="#f5f7ef"/>
+  <rect x="850" y="276" width="212" height="38" rx="19" fill="#235245"/><text x="956" y="301" text-anchor="middle" font-family="Arial,sans-serif" font-size="14" letter-spacing="2" fill="#c8f0da">NO NODE REQUIRED</text>
+</svg>

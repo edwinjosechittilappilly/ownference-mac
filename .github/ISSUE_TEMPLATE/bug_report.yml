@@ -1,0 +1,15 @@
+name: Bug report
+description: Report a reproducible native workflow failure without private text.
+body:
+  - type: textarea
+    id: reproduction
+    attributes:
+      label: Steps, expected behavior and actual result
+    validations:
+      required: true
+  - type: textarea
+    id: environment
+    attributes:
+      label: Mac architecture, macOS version, app version and model readiness
+    validations:
+      required: true
