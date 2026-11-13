@@ -68,17 +68,18 @@ final class AppDelegate: NSObject, NSApplicationDelegate, NSWindowDelegate {
         let appItem = NSMenuItem()
         main.addItem(appItem)
         let appMenu = NSMenu()
-        appMenu.addItem(withTitle: "About Ownference Mac", action: #selector(NSApplication.orderFrontStandardAboutPanel(_:)), keyEquivalent: "")
+        appMenu.addItem(withTitle: "About OwnMode Mac", action: #selector(NSApplication.orderFrontStandardAboutPanel(_:)), keyEquivalent: "")
         appMenu.addItem(.separator())
-        appMenu.addItem(withTitle: "Quit Ownference Mac", action: #selector(NSApplication.terminate(_:)), keyEquivalent: "q")
+        appMenu.addItem(withTitle: "Quit OwnMode Mac", action: #selector(NSApplication.terminate(_:)), keyEquivalent: "q")
         appItem.submenu = appMenu
         NSApp.mainMenu = main
         statusItem = NSStatusBar.system.statusItem(withLength: NSStatusItem.squareLength)
         if let url = Bundle.main.url(forResource: "MenuIcon", withExtension: "png"), let image = NSImage(contentsOf: url) {
             image.size = NSSize(width: 18, height: 18)
+            image.isTemplate = true
             statusItem.button?.image = image
         } else { statusItem.button?.title = "O" }
-        statusItem.button?.toolTip = "Ownference Mac"
+        statusItem.button?.toolTip = "OwnMode Mac"
         let menu = NSMenu()
         let open = NSMenuItem(title: "Open Workspace", action: #selector(openWorkspace), keyEquivalent: "")
         open.target = self; menu.addItem(open)
@@ -88,7 +89,7 @@ final class AppDelegate: NSObject, NSApplicationDelegate, NSWindowDelegate {
             entry.target = self; entry.tag = index; menu.addItem(entry)
         }
         menu.addItem(.separator())
-        menu.addItem(withTitle: "Quit Ownference Mac", action: #selector(NSApplication.terminate(_:)), keyEquivalent: "q")
+        menu.addItem(withTitle: "Quit OwnMode Mac", action: #selector(NSApplication.terminate(_:)), keyEquivalent: "q")
         statusItem.menu = menu
     }
 
@@ -114,7 +115,7 @@ final class AppDelegate: NSObject, NSApplicationDelegate, NSWindowDelegate {
     }
     func buildWindow() {
         window = NSWindow(contentRect: NSRect(x: 0, y: 0, width: 900, height: 720), styleMask: [.titled, .closable, .miniaturizable, .resizable], backing: .buffered, defer: false)
-        window.title = "Ownference Mac"; window.minSize = NSSize(width: 650, height: 570)
+        window.title = "OwnMode Mac"; window.minSize = NSSize(width: 650, height: 570)
         window.isReleasedWhenClosed = false
         window.center(); window.delegate = self
         if smoke {
@@ -135,14 +136,14 @@ final class AppDelegate: NSObject, NSApplicationDelegate, NSWindowDelegate {
         if let iconURL = Bundle.main.url(forResource: "Icon", withExtension: "icns"), let image = NSImage(contentsOf: iconURL) {
             let icon = NSImageView(image: image)
             icon.imageScaling = .scaleProportionallyUpOrDown
-            icon.setAccessibilityLabel("Ownference Mac logo")
+            icon.setAccessibilityLabel("OwnMode Mac logo")
             icon.widthAnchor.constraint(equalToConstant: 42).isActive = true
             icon.heightAnchor.constraint(equalToConstant: 42).isActive = true
             titleRow.addArrangedSubview(icon)
         }
-        titleRow.addArrangedSubview(label("Ownference", size: 25, weight: .bold))
+        titleRow.addArrangedSubview(label("OwnMode Mac", size: 25, weight: .bold))
         root.addArrangedSubview(titleRow)
-        let subtitle = label("Your words. Your Mac. Your model.", size: 13, weight: .regular); subtitle.textColor = .secondaryLabelColor; root.addArrangedSubview(subtitle)
+        let subtitle = label("Write with the model in your Mac.", size: 13, weight: .regular); subtitle.textColor = .secondaryLabelColor; root.addArrangedSubview(subtitle)
         availability.identifier = NSUserInterfaceItemIdentifier("modelAvailability"); availability.textColor = .secondaryLabelColor; root.addArrangedSubview(availability)
         status.identifier = NSUserInterfaceItemIdentifier("modelStatus"); status.textColor = .secondaryLabelColor; root.addArrangedSubview(status)
         let top = NSStackView(); top.orientation = .horizontal; top.spacing = 8
@@ -168,7 +169,7 @@ final class AppDelegate: NSObject, NSApplicationDelegate, NSWindowDelegate {
         availability.stringValue = modelStatus()
         switch SMAppService.mainApp.status {
         case .enabled: loginStatus.stringValue = "Launch at login is enabled."; loginButton.title = "Disable launch at login"
-        case .requiresApproval: loginStatus.stringValue = "Approval required: open Login Items Settings and allow Ownference Mac."; loginButton.title = "Disable launch at login"
+        case .requiresApproval: loginStatus.stringValue = "Approval required: open Login Items Settings and allow OwnMode Mac."; loginButton.title = "Disable launch at login"
         case .notRegistered: loginStatus.stringValue = "Launch at login is off (optional)."; loginButton.title = "Enable launch at login"
         case .notFound: loginStatus.stringValue = "Login item unavailable. Move the app to Applications and try again."; loginButton.title = "Enable launch at login"
         @unknown default: loginStatus.stringValue = "Login item status is unknown. Check Login Items Settings."; loginButton.title = "Enable launch at login"
@@ -192,7 +193,7 @@ final class AppDelegate: NSObject, NSApplicationDelegate, NSWindowDelegate {
     @objc func clearAll() { cancelGeneration(); source.string = ""; result.string = ""; direction.stringValue = ""; status.stringValue = ""; refreshStatus() }
     @objc func copyResult() { NSPasteboard.general.clearContents(); NSPasteboard.general.setString(result.string, forType: .string) }
     @objc func saveResult() {
-        let panel = NSSavePanel(); panel.nameFieldStringValue = "Ownference.txt"; panel.allowedContentTypes = [.plainText]
+        let panel = NSSavePanel(); panel.nameFieldStringValue = "OwnMode.txt"; panel.allowedContentTypes = [.plainText]
         if panel.runModal() == .OK, let url = panel.url {
             do { try result.string.write(to: url, atomically: true, encoding: .utf8) }
             catch { status.stringValue = "save_failed: \(error.localizedDescription)" }
@@ -219,7 +220,7 @@ final class AppDelegate: NSObject, NSApplicationDelegate, NSWindowDelegate {
                     }
                 }
                 try Task.checkCancellation()
-                guard !result.string.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty else { throw NSError(domain: "Ownference", code: 1, userInfo: [NSLocalizedDescriptionKey: "The model returned an empty response."]) }
+                guard !result.string.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty else { throw NSError(domain: "com.ownmode.mac", code: 1, userInfo: [NSLocalizedDescriptionKey: "The model returned an empty response."]) }
                 status.stringValue = "Complete · Apple on-device model"
                 generation = nil; runButton.isEnabled = true; cancelButton.isEnabled = false
                 if smoke {
@@ -306,7 +307,7 @@ final class AppDelegate: NSObject, NSApplicationDelegate, NSWindowDelegate {
 }
 
 @main
-struct OwnferenceApp {
+struct OwnModeApp {
     @MainActor static func main() {
         let args = CommandLine.arguments
         if args.contains("--smoke") {
